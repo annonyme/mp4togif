@@ -324,16 +324,7 @@
 		</div>
 
 		<div style="text-align:center;margin-bottom:10px;">
-			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-			<!-- webm-maker_com -->
-			<ins class="adsbygoogle"
-			     style="display:block"
-			     data-ad-client="ca-pub-5351066733111969"
-			     data-ad-slot="9661326134"
-			     data-ad-format="auto"></ins>
-			<script>
-			(adsbygoogle = window.adsbygoogle || []).push({});
-			</script>
+			<!-- place adds here -->
 		</div>
 		
 		<div id="contact" class="panel panel-default" cjs-controller="contact:ContactController:init">
@@ -403,18 +394,20 @@
 		    // this line executes the entire code once page is loaded
 		    var global_add_blocked = false;
 		    window.onload = function(){		    
-			    setTimeout(function() {			 
-				    // here we are searching for first adsense code available on page
-				    var ad = document.querySelector("ins.adsbygoogle");
+			    //if you have added ads to your page, you can check for addblocker and render a watermark to the gif/webm.
+				
+				// setTimeout(function() {			 
+				//     // here we are searching for first adsense code available on page
+				//     var ad = document.querySelector("ins.adsbygoogle");
 				 
-				    // If ad contains no innerHTML, adblocker is working
-				    if (ad && ad.innerHTML.replace(/\s/g, "").length == 0) {		 
-				    	global_add_blocked = true;
-				    	ad.style.cssText = 'display:block !important';		 
-					    // here you can put any html code to show as alternative
-					    $(".adsbygoogle").after('<strong style="display:block;text-align:center;">Please disable your ad blocking plugin (F5/reload after) and support this website. Thanks :-)<br/>The WATERMARK will be removed!</strong>'); 
-				    }
-			    }, 1000);
+				//     // If ad contains no innerHTML, adblocker is working
+				//     if (ad && ad.innerHTML.replace(/\s/g, "").length == 0) {		 
+				//     	global_add_blocked = true;
+				//     	ad.style.cssText = 'display:block !important';		 
+				// 	    // here you can put any html code to show as alternative
+				// 	    $(".adsbygoogle").after('<strong style="display:block;text-align:center;">Please disable your ad blocking plugin (F5/reload after) and support this website. Thanks :-)<br/>The WATERMARK will be removed!</strong>'); 
+				//     }
+			    // }, 1000);
 		    };
 		</script>
 	</body>

@@ -1,0 +1,20 @@
+﻿{
+    "version": "2.0",
+    "name": "Mp4toGIF",
+    "description": "Mp4 To Gif converts your videos MP4, OGV and images JPEG, PNG to animations WebM and Gif. Define framerate and resolution by your self. This online creator/editor/converter is webbased, no plugins like flash/java is needed. Supported conversions: MP4 to GIF, OGV to GIF, MP4 to WebM, OGV to WebM, WebM to Gif, JPEG to GIF, PNG to GIF.",
+    "launch_path": "/index.html",
+    "icons": {
+		"60": "/icons/icon2_60.png",
+		"120": "/icons/icon2_120.png",
+		"128": "/icons/icon2_128.png",
+		"196": "/icons/icon2_196.png"
+    },
+    "developer": {
+        "name": "Hannes Pries",
+        "url": "http://www.hannespries.de"
+    },
+    "installs_allowed_from": ["*"],
+    "default_locale": "en",
+	
+	"fullscreen" : "false"
+}

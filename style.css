@@ -1,0 +1,140 @@
+			body{
+				font-family:arial;
+				padding:10px;
+			}
+			
+			div#mode{
+				text-align:center;
+				position:relative;
+				margin-top:20px;
+			}
+			
+			div#mode  li {
+				cursor:pointer;
+			}
+			
+			div.panel-body > table{
+				margin-left:auto;
+				margin-right:auto;
+			}
+			
+			div.panel-body > table td{
+				text-align:center;
+				padding:5px;
+			}
+			
+			div.panel-body > table td > input[type="text"]{
+				text-align:center;
+				border:2px solid #000000;
+				border-radius:4px;
+				font-weight:bold;
+			}
+			
+			input[type="file"]{
+				max-width:180px;
+				overflow:hidden;
+			}
+			
+			div.panel-body > table td > input.finalTime{
+				background-color:#CCCCCC;
+			}
+			
+			div#datafields{
+				margin-top:20px;
+			}
+			
+			div#datafields td{
+				text-align:left;
+			}
+			
+			div#datafields > div > div{
+				margin-bottom:15px;
+			}
+			
+			div.inputform > div{
+				margin-bottom:15px;
+			}
+			
+			video{
+				border:1px solid #000000;
+				border-radius:4px;
+				width:90%;
+				max-width:320px;
+				background-color:#DDDDDD;
+				margin:5px;
+			}
+			
+			div.dialog{
+				position:fixed;
+				top:0px;
+				left:0px;
+				width:100%;
+				height:100%;
+				text-align:center;
+				background-color:rgba(0,0,0,0.7);
+				z-index:1000;
+			}
+			
+			div.dialog > div.innerDialog{
+				position:absolute;
+				width:24%;
+				height:24%;
+				left:38%;
+				top:38%;
+				text-align:center;
+				color:#000000;
+			}
+			
+			img.email{
+				cursor:pointer;
+			}
+			
+			input[type="text"].number{
+				text-align:right;
+			}
+			
+			span.info{
+				font-style:italic;
+				font-size:0.7em;
+			}
+			
+			div.files > img {
+				width:10%;
+				border-radius:5px;
+			}
+			
+			h1{
+				font-size:1.3em;
+			}
+			
+			h2{
+				font-size:1em;
+			}
+			
+			strong.supported{
+					text-decoration:underline;
+			}	
+			
+			table.supported{
+					width:100%;
+					border-collapse:collapse;
+			}	
+			
+			table.supported td,table.supported th {
+					padding:3px;
+					font-size:85%;
+					border-left:1px solid #CCCCCC;
+			}
+			
+			table.supported tr{
+					border-top:1px solid #CCCCCC;
+			}
+
+			table.supported tr:first-child{
+					border-top:0px solid #CCCCCC;
+			}
+			
+			table.supported td:first-child,table.supported th:first-child{
+					border-left:0px solid #CCCCCC;
+			}
+			

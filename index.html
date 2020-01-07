@@ -1,0 +1,439 @@
+<html lang="en">
+	<head>
+		<title>MP4 to Gif - convert online MP4, OGV, WebM, JPEG, PNG to WebM and Gif - MP4toGif Converter</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="user-scalable=no,width=device-width">
+		<meta name="robots" content="index, follow" />
+		<meta name="mobile-web-app-capable" content="yes"/>
+		<meta name="apple-mobile-web-app-capable" content="yes"/>
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta http-equiv="language" content="en" />
+		
+		<meta name="author" content="Hannes Pries"/>
+		
+		<meta name="description" content="Mp4 To Gif converts your videos MP4, OGV and images JPEG, PNG to animations WebM and Gif. Define framerate and resolution by your self. This online creator/editor/converter is webbased, no plugins like flash/java is needed. Supported conversions: MP4 to GIF, OGV to GIF, MP4 to WebM, OGV to WebM, WebM to Gif, JPEG to GIF, PNG to GIF.">
+		<link rel="icon" href="icons2/icon_120.png" type="image/png">
+		
+		<script type="text/javascript" src="./lib/omggif.js"></script>
+		<script type="text/javascript" src="./lib/NeuQuant.js"></script>
+		<script type="text/javascript" src="./lib/ownImpl.js"></script>
+		
+		<script type="text/javascript" src="./lib/whammy.js"></script>
+		<script type="text/javascript" src="./lib/libwebp-0.1.3.demin.js"></script>
+		<script type="text/javascript" src="./lib/cJS.js"></script>
+		<script type="text/javascript" src="./lib/filters.js"></script>
+		
+		<script type="text/javascript" src="./controllers/Switcher.js"></script>
+		<script type="text/javascript" src="./controllers/VideoViewController.js"></script>
+		<script type="text/javascript" src="./controllers/GifViewController.js"></script>
+		<script type="text/javascript" src="./controllers/LiveViewController.js"></script>
+		<script type="text/javascript" src="./controllers/FilesViewController.js"></script>
+		<script type="text/javascript" src="./controllers/DummyViewController.js"></script>
+		<script type="text/javascript" src="./controllers/CreatorViewController.js"></script>
+		<script type="text/javascript" src="./controllers/WaitDialogController.js"></script>
+		<script type="text/javascript" src="./controllers/WarnDialogController.js"></script>
+		<script type="text/javascript" src="./controllers/PreviewDialogController.js"></script>
+		<script type="text/javascript" src="./controllers/ContactController.js"></script>
+		
+		<script type="text/javascript" src="./lib/filesaver/FileSaver.js"></script>
+		
+		<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+		
+		<!-- bootstrap -->
+		<link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">		
+		<link rel="stylesheet" type="text/css" href="style.css?v=1.1"/> 
+	</head>
+	<body>
+		<div id="mode" cjs-controller="switcher:Switcher">
+			<ul class="nav nav-tabs" cjs-binding-element="menuElement">
+			  <li id="nav_video" role="presentation" class="active" cjs-binding-event="click:changeView"><a><span class="glyphicon glyphicon-film"></span> Video</a></li>
+			  <!--
+			  <li id="nav_gif" style="display:none;" role="presentation" cjs-binding-event="click:changeView"><a><span class="glyphicon glyphicon-picture"></span> Gif</a></li>
+			  <li id="nav_live" style="display:none;" role="presentation" cjs-binding-event="click:changeView"><a><span class="glyphicon glyphicon-video"></span> Live</a></li>
+			  -->
+			  <li id="nav_files" role="presentation" cjs-binding-event="click:changeView"><a><span class="glyphicon glyphicon-picture"></span> Images</a></li>
+			  <li id="nav_info" role="presentation" cjs-binding-event="click:changeView"><a><span class="glyphicon glyphicon-info-sign"></span> Info</a></li>
+			  <li id="nav_tutorials" role="presentation" cjs-binding-event="click:changeView"><a><span class="glyphicon glyphicon-education"></span> Tutorials</a></li>
+			</ul>
+		</div>
+		<div class="panel panel-default" cjs-controller="video:VideoViewController">
+			<div class="panel-heading">Load a video-file (webm/ogv/mp4) and convert it to a gif or webm* animation (max 20 sec).</div>
+			<div class="panel-body">
+				<table>
+					<tr>
+						<td colspan="3">
+							<div class="input-group">
+								<span class="input-group-addon">File</span>
+								<input type="file" accept="video/*" cjs-binding-event="change:openFile"/>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3"><video muted="muted" controls="controls" crossOrigin="" cjs-binding-element="videoElement"></video></td>
+					</tr>
+					<tr>
+						<td style="width:48%">
+							<div class="input-group">
+								<div class="input-group-btn"><input type="button" class="btn btn-success" value="Begin" cjs-binding-event="click:setBegin"/></div>
+								<input type="text" value="0" readonly cjs-binding-value="begin" class="form-control number"/>
+								<span class="input-group-addon">sec.</span>
+							</div>
+						</td>
+						<td style="width:48%">
+							<div class="input-group">
+								<div class="input-group-btn"><input type="button" class="btn btn-danger" value="End" cjs-binding-event="click:setEnd"/></div>
+								<input type="text" value="0" readonly cjs-binding-value="end" class="form-control number"/>
+								<span class="input-group-addon">sec.</span>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="input-group">
+								<span class="input-group-addon">Duration</span>
+								<input type="text" value="0" readonly cjs-binding-value="full" class="form-control number"/>
+								<span class="input-group-addon">sec.</span>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!--
+		<div class="panel panel-default" style="display:none;" cjs-controller="gif:GifViewController">
+			<div class="panel-heading">Load a gif-file (only animated gifs!) and convert it to different animation-format.</div>
+			<div class="panel-body">
+				<table>
+					<tr>
+						<td>Gif-Animation:</td>
+						<td colspan="2"><input type="file" accept="image/gif"/></td>
+					</tr>
+					<tr>
+						<td colspan="3"><img alt="gif" style="display:none;"/></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		-->
+		<!--
+		<div class="panel panel-default" style="display:none;" cjs-controller="live:LiveViewController">
+			<div class="panel-heading">Capture a animation with your smartphone or webcam (max 20sec duration).</div>
+			<div class="panel-body">
+				<table>
+					<tr>
+						<td><video muted="muted"></video></td>
+					</tr>
+					<tr>
+						<td>
+							<div class="input-group">
+								<div class="input-group-btn"><input type="button" class="btn btn-danger" value="Record" /></div>
+								<input type="text" value="00" readonly class="form-control number"/>
+								<span class="input-group-addon">sec.</span>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		-->
+		<div class="panel panel-default" style="display:none;" cjs-controller="files:FilesViewController:init">
+			<div class="panel-heading">load png or jpeg files to create an animation(max <span cjs-binding-value="max">50</span>).</div>
+			<div class="panel-body inputform">
+				<div class="input-group">
+					<span class="input-group-addon">Files</span>
+					<input type="file" accept="image/*" cjs-binding-event="change:openFiles"/>
+				</div>
+				<div class="files" cjs-binding-element="images"></div>
+				<input type="button" class="btn btn-info" value="clear" cjs-binding-event="click:clear"/>
+			</div>
+		</div>
+		<div class="panel panel-default" style="display:none;" cjs-controller="info:DummyViewController">
+			<div class="panel-heading"><h1>MP4 to Gif (MP4,OGV,WebM,Images to WebM,Gif)</h1></div>
+			<div class="panel-body inputform">
+				<p>
+					With MP4toGif.com you are able to convert video (MP4,OGV) and images (JPEG,PNG) to simple <a href="http://www.webmproject.org/" 
+					target="_blank">WebM</a> and Gif animations. MP4toGif
+					based complety on JavaScript and HTML5 technology and runs in your webbrowser. So there is no need to upload your
+					files and give it in the hands of a second person.. or company.
+				</p>
+				<p>
+					MP4toGif was testes on Firefox, Chrome and Edge. Because of the native WebP-support in the canvas-implementation of the
+					chrome-browser, the rendering is very fast with chrome. Firefox uses webworkers to enable a stable and fast-enough
+					rendering process.
+				</p>
+				<p>
+					The duration of a WebM-animation is restricted to 20 seconds or 50 frames (if the animation is created from image-files). But
+					it is enough to replace a classic Gif-animation and have better color and image quality and also a smaller file-size.
+				</p>
+				<p>
+					A filter for automatic black &and; white conversion was integrated, so an BW-animation from a colored video or images can be created
+					directly without processing the footage-files with a seperate programm. 
+				</p>
+				<br/>
+				<p>
+				<strong class="supported">Output Support:</strong><br/>
+				<table class="supported">
+					<tr>
+						<th>&nbsp;</th>
+						<th>Mozilla Firefox</th>
+						<th>Google Chrome</th>
+						<th>Microsoft Edge</th>
+						<th>Vivaldi</th>
+					</tr>
+					<tr>
+						<th>Gif</th>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+					</tr>
+					<tr>
+						<th>WebM</th>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-minus"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+					</tr>
+				</table>
+				</p>
+				<br/>
+				<p>
+				<strong class="supported">Input Support:</strong><br/>
+				<table class="supported">
+					<tr>
+						<th>&nbsp;</th>
+						<th>Mozilla Firefox</th>
+						<th>Google Chrome</th>
+						<th>Microsoft Edge</th>
+						<th>Vivaldi</th>
+					</tr>
+					<tr>
+						<th>MP4</th>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+					</tr>
+					<tr>
+						<th>WebM</th>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-minus"></span></td>
+						<td><span class="glyphicon glyphicon-question-sign"></span></td>
+					</tr>
+					<tr>
+						<th>OGV</th>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-minus"></span></td>
+						<td><span class="glyphicon glyphicon-question-sign"></span></td>
+					</tr>
+					<tr>
+						<th>JPEG</th>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+					</tr>
+					<tr>
+						<th>PNG</th>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+						<td><span class="glyphicon glyphicon-ok"></span></td>
+					</tr>
+				</table>
+				</p>
+				<p><i>
+					If you have tested with Opera or Safari or other input-formats.. let <a href="mailto:hp@hannespries.de">me</a> know!
+				</i></p>
+				<p>
+					<strong>Donations</strong><br/>
+					I don't like watermarks on gifs. But i want more visiters so the Google adds would bring in some money. I would like to refactor the gif export to use Webworkers 
+					to enable longer durations and better performance. Also i would like to import exsting gif-animation or capture a videostream via WebRTC. But(!) this needs much of
+					time and if i will spend this time to improve mp4togif.com i wouldn't have time to cook.. so please donate that i can order pizza and spends the saved time to this
+					project :-)
+					<br/>
+					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					<input type="hidden" name="cmd" value="_s-xclick">
+					<input type="hidden" name="hosted_button_id" value="M5WXPNBZ3N58U">
+					<input type="image" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen – mit PayPal.">
+					<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+					</form>
+					
+				</p>
+			</div>
+		</div>
+		<div class="panel panel-default" style="display:none;" cjs-controller="tutorials:DummyViewController">
+			<div class="panel-heading"><h1>Tutorials</h1></div>
+			<div class="panel-body inputform">
+				<p>
+					Here you can find a few tutorials to see how to use MP4toGIF.com.
+				</p>
+				<p>
+					<iframe width="420" height="315" src="https://www.youtube.com/embed/MnAcT2wCxc4" frameborder="0" allowfullscreen></iframe>
+					&nbsp;
+					<iframe width="420" height="315" src="https://www.youtube.com/embed/mBazsT0C1wU" frameborder="0" allowfullscreen></iframe>
+				</p>			
+				<p>
+				Or read a <a href="http://annonyme-it.tumblr.com/post/122434130434/how-to-create-a-gif-animation-from-a-mp4-video" target="_blank">tutorial on Tumblr</a>.
+				</p>
+			</div>
+		</div>	
+		
+		<div class="panel panel-default" id="datafields" cjs-controller="creator:CreatorViewController">
+			<div class="panel-heading">Animation Parameters</div>
+			<div class="panel-body">
+				<div class="input-group input-group">
+					<span class="input-group-addon">FPS</span>
+					<input type="number" value="6" min="4" max="60" class="form-control" cjs-binding-value="fps"/>	
+					<span class="input-group-addon">(4-60 frames per second, use not more than 12 for GIF)</span>
+				</div>
+				<div class="input-group input-group">
+					<span class="input-group-addon">Format</span>
+					<select  cjs-binding-value="format" class="form-control">
+						<option value="webm">WebM *</option>
+						<option value="gif">GIF-Animation</option>																
+					</select>	
+				</div>
+				<div class="input-group input-group">
+					<span class="input-group-addon">Color-Filter</span>
+					<select  cjs-binding-value="filter" class="form-control">
+						<option value="" selected>-</option>
+						<option value="bw">Grayscale</option>
+						<option value="vintage">Vintage</option>
+						<option value="vintage2">Vintage 2</option>
+						<option value="vintage3">Vintage 3</option>
+						<option value="sepia">Sepia</option>		
+						<option value="invert">Inverted</option>	
+						<option value="purple">70's 8mm</option>
+						<option value="neon">80's neon</option>	
+						<option value="warm">Warm Colours</option>															
+					</select>	
+				</div>
+				<div class="input-group input-group">
+					<span class="input-group-addon">Image-Filter</span>
+					<select  cjs-binding-value="vig" class="form-control">						
+						<option value="vig" selected>Vignetting</option>		
+						<option value="displace" selected>Line-Glitch</option>		
+						<option value="fishlies" selected>//fishlies</option>
+						<option value="-" selected>-</option>											
+					</select>	
+				</div>
+				<div class="input-group input-group">
+					<span class="input-group-addon">Animation-Filter</span>
+					<select  cjs-binding-value="animationFilter" class="form-control">						
+						<option value="revert" selected>Revert</option>
+						<option value="playrewind" selected>Play and Rewind</option>	
+						<option value="playfastrewind" selected>Play and (fast) Rewind</option>	
+						<option value="slowmotion" selected>Slowmotion</option>	
+						<option value="-" selected>-</option>										
+					</select>	
+				</div>
+				<div class="input-group input-group">
+					<span class="input-group-addon">Size</span>
+					<input type="number" value="240" cjs-binding-value="width" class="form-control"/><span class="input-group-addon">x</span><input type="number" value="180" class="form-control" cjs-binding-value="height"/>	
+				</div>
+				<input type="button" class="btn btn-info" value="Create Animation..." cjs-binding-event="click:makeIt"/>
+			</div>
+		</div>
+
+		<div style="text-align:center;margin-bottom:10px;">
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<!-- webm-maker_com -->
+			<ins class="adsbygoogle"
+			     style="display:block"
+			     data-ad-client="ca-pub-5351066733111969"
+			     data-ad-slot="9661326134"
+			     data-ad-format="auto"></ins>
+			<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		</div>
+		
+		<div id="contact" class="panel panel-default" cjs-controller="contact:ContactController:init">
+			<div class="panel-heading">Contact</div>
+			<div class="panel-body">
+				by <a href="mailto:hp@hannespries.de">hp@hannespries.de</a> (visit <a href="http://www.hannespries.de" target="_blank">hannespries.de</a>)
+				<br/>
+				visit us on facebook: <a href="https://www.facebook.com/Mp4togifcom-216389558733076/" target="_blank">Mp4togif.com</a>
+
+			</div>
+			<div class="panel-footer">
+				<span class="info">* WebM-export works best in Chrome and Vivaldi.</span>
+			</div>
+		</div>	
+		
+		<div id="dialogs">
+			<div id="openOrUpload" class="dialog" style="display:none" cjs-controller="preview:PreviewDialogController">
+				<div class="innerDialog">
+					<div class="panel panel-success">
+						<div class="panel-heading">
+							Preview
+						</div>
+						<div class="panel-body">
+							<img class="preview" alt="gif preview" cjs-binding-element="gif"/>
+							<video class="preview" alt="video preview" cjs-binding-element="video" muted="muted" controls="controls" loop="loop"/>
+						</div>
+						<div class="panel-footer">
+							<div class="btn-group" role="group" aria-label="...">
+								<input type="button" class="btn btn-success" value="download" cjs-binding-event="click:download"/>
+								<input type="button" class="btn btn-info" value="Facebook" cjs-binding-event="click:facebook" cjs-binding-element="facebookButton" style="display:none;"/>
+								<input type="button" class="btn btn-danger" value="close" cjs-binding-event="click:close"/>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+			
+			<div id="error" class="dialog" style="display:none;" cjs-controller="warn:WarnDialogController">
+				<div class="innerDialog">
+					<div class="panel panel-danger">
+						<div class="panel-heading">
+							Warning!
+						</div>
+						<div class="panel-body" cjs-binding-value="message">
+							<!-- message -->
+						</div>
+						<div class="panel-footer">
+							<input type="button" class="btn btn-danger" value="close" cjs-binding-event="click:close"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div id="wait" class="dialog" style="display:none;" cjs-controller="wait:WaitDialogController">	
+				<div class="innerDialog">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							Waiting...
+						</div>
+						<div class="panel-body">
+							Please wait a few seconds.
+						</div>
+						<div class="panel-footer" cjs-binding-value="message">							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+		    // this line executes the entire code once page is loaded
+		    var global_add_blocked = false;
+		    window.onload = function(){		    
+			    setTimeout(function() {			 
+				    // here we are searching for first adsense code available on page
+				    var ad = document.querySelector("ins.adsbygoogle");
+				 
+				    // If ad contains no innerHTML, adblocker is working
+				    if (ad && ad.innerHTML.replace(/\s/g, "").length == 0) {		 
+				    	global_add_blocked = true;
+				    	ad.style.cssText = 'display:block !important';		 
+					    // here you can put any html code to show as alternative
+					    $(".adsbygoogle").after('<strong style="display:block;text-align:center;">Please disable your ad blocking plugin (F5/reload after) and support this website. Thanks :-)<br/>The WATERMARK will be removed!</strong>'); 
+				    }
+			    }, 1000);
+		    };
+		</script>
+	</body>
+</html>
